@@ -1,7 +1,7 @@
 class AddLabelsTable < ActiveRecord::Migration[5.2]
   def up
     create_table :labels do |t|
-      t.string :name
+      t.string :name, index: true
       t.text :description
       t.string :website_url
 
