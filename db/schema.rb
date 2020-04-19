@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_19_324457) do
+ActiveRecord::Schema.define(version: 2020_04_19_324459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,9 @@ ActiveRecord::Schema.define(version: 2020_04_19_324457) do
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.bigint "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_genres_on_name"
-    t.index ["product_id"], name: "index_genres_on_product_id", unique: true
   end
 
   create_table "labels", force: :cascade do |t|
@@ -31,6 +29,17 @@ ActiveRecord::Schema.define(version: 2020_04_19_324457) do
     t.string "website_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_labels_on_name"
+  end
+
+  create_table "product_genres", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_product_genres_on_genre_id"
+    t.index ["product_id", "genre_id"], name: "index_product_genres_on_product_id_and_genre_id", unique: true
+    t.index ["product_id"], name: "index_product_genres_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -41,10 +50,11 @@ ActiveRecord::Schema.define(version: 2020_04_19_324457) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "released_at"
-    t.index ["label_id"], name: "index_products_on_label_id", unique: true
+    t.index ["label_id"], name: "index_products_on_label_id"
     t.index ["title"], name: "index_products_on_title"
   end
 
-  add_foreign_key "genres", "products"
+  add_foreign_key "product_genres", "genres"
+  add_foreign_key "product_genres", "products"
   add_foreign_key "products", "labels"
 end

@@ -1,5 +1,6 @@
 class Genre < ApplicationRecord
-  belongs_to :product, inverse_of: :genres
+  has_many :product_genres
+  has_many :products, through: :product_genres
 
-  validates :name, :description, presence: true
+  validates :name, presence: true
 end
