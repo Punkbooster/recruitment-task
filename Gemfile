@@ -20,6 +20,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'pry'
   gem 'awesome_print'
+  gem 'factory_bot_rails'
 end
 
 group :development do
