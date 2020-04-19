@@ -4,7 +4,7 @@ FactoryBot.define do
     description { 'Sample description' }
     released_at { Time.now - 30.days }
     price { 10 }
-    label
+    label { Label.last || build(:label) }
 
     factory :product_with_genre do
       after(:create) do |product|
