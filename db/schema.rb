@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_04_19_324459) do
   enable_extension "plpgsql"
 
   create_table "genres", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,9 +24,7 @@ ActiveRecord::Schema.define(version: 2020_04_19_324459) do
   end
 
   create_table "labels", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.string "website_url"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_labels_on_name"
@@ -43,13 +41,12 @@ ActiveRecord::Schema.define(version: 2020_04_19_324459) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
+    t.string "title", null: false
     t.decimal "price", precision: 8, scale: 2, null: false
     t.bigint "label_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "released_at"
+    t.datetime "released_at", null: false
     t.index ["label_id"], name: "index_products_on_label_id"
     t.index ["title"], name: "index_products_on_title"
   end
