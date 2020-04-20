@@ -1,26 +1,27 @@
 require 'rails_helper'
 
-RSpec.describe HomeController, type: :controller do
+RSpec.describe HomeController, type: :request do
   describe 'GET index' do
 
     subject { @controller.instance_variable_get(:@products) }
 
     context 'without search query' do
       it 'returns a successful response' do
-        get :index
+        get root_path
+
         expect(response).to be_success
       end
 
       it 'assigns @products' do
         product = create(:product)
 
-        get :index
+        get root_path
 
         expect(subject).to include(product)
       end
 
       it 'assigns empty array when no products' do
-        get :index
+        get root_path
 
         expect(subject).to be_empty
       end
@@ -32,7 +33,7 @@ RSpec.describe HomeController, type: :controller do
       let!(:product3) { create(:product, title: 'T-shirt') }
 
       it 'returns a product that matches query' do
-        get :index, params: { q: 'cd' }
+        get root_path, params: { q: 'cd' }
 
         result = subject
 
@@ -41,7 +42,7 @@ RSpec.describe HomeController, type: :controller do
       end
 
       it 'returns all products in case of empty query' do
-        get :index, params: { q: '' }
+        get root_path, params: { q: '' }
 
         expect(subject).to include(product1, product2, product3)
       end
@@ -51,7 +52,7 @@ RSpec.describe HomeController, type: :controller do
         let!(:genre) { create(:genre, name: searched_genre_name, products: [product1]) }
 
         it 'returns product by genre search' do
-          get :index, params: { q: 'genre:Metal' }
+          get root_path, params: { q: 'genre:Metal' }
 
           result = subject
 
