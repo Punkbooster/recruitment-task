@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :product, class: Product do
-    title { Faker::Music.album }
+    title { Faker::Music.unique.album }
     released_at { Faker::Date.in_date_period }
     price { Faker::Commerce.price }
     label { Label.last || build(:label) }
