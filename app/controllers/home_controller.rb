@@ -1,11 +1,15 @@
 class HomeController < ApplicationController
   def index
-    @products = Product.search(query_params)
+    @products = if query_params
+                  Product.search(query_params)
+                else
+                  Product.includes(:genres, :label)
+                end
   end
 
   private
 
   def query_params
-    params.permit(:search_query)[:search_query]
+    params.permit(:q)[:q]
   end
 end
