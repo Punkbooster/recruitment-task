@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
     @products = if query_params
-                  Product.search(query_params)
+                  ProductsQuery.new(query_params).all.includes(:genres, :label)
                 else
                   Product.includes(:genres, :label)
                 end
