@@ -12,7 +12,7 @@ class ProductsSearchService
   end
 
   def call
-    return [] if scope_name.nil? || @relation.empty?
+    return [] if invalid_query?
 
     @relation.public_send(scope_name, @query_value)
   end
@@ -21,5 +21,9 @@ class ProductsSearchService
 
   def scope_name
     @scope_name ||= ASSOCIATION_SCOPE_NAME_PAIRS[@association_name]
+  end
+
+  def invalid_query?
+    scope_name.nil? || @relation.empty? || @query_value.empty?
   end
 end

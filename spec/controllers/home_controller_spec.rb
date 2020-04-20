@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe HomeController, type: :controller do
   describe 'GET index' do
+
+    subject { @controller.instance_variable_get(:@products) }
+
     context 'without search query' do
       it 'returns a successful response' do
         get :index
-
         expect(response).to be_success
       end
 
@@ -14,13 +16,13 @@ RSpec.describe HomeController, type: :controller do
 
         get :index
 
-        expect(@controller.instance_variable_get(:@products)).to include(product)
+        expect(subject).to include(product)
       end
 
       it 'assigns empty array when no products' do
         get :index
 
-        expect(@controller.instance_variable_get(:@products)).to be_empty
+        expect(subject).to be_empty
       end
     end
 
@@ -30,25 +32,31 @@ RSpec.describe HomeController, type: :controller do
       let!(:product3) { create(:product, title: 'T-shirt') }
 
       it 'returns a product that matches query' do
-        get :index, params: { search_query: 'cd' }
+        get :index, params: { q: 'cd' }
 
-        expect(@controller.instance_variable_get(:@products)).to include(product2)
-        expect(@controller.instance_variable_get(:@products)).to_not include([product1, product3])
+        result = subject
+
+        expect(result.count).to eq(1)
+        expect(result).to include(product2)
       end
 
-      it 'returns empty array in case of empty query' do
-        get :index, params: { search_query: '' }
+      it 'returns all products in case of empty query' do
+        get :index, params: { q: '' }
 
-        expect(@controller.instance_variable_get(:@products)).to be_empty
+        expect(subject).to include(product1, product2, product3)
       end
 
       context 'association query' do
-        let!(:genre) { create(:genre, products: [product1]) }
+        let(:searched_genre_name) { 'Metal' }
+        let!(:genre) { create(:genre, name: searched_genre_name, products: [product1]) }
 
         it 'returns product by genre search' do
-          get :index, params: { search_query: 'genre:Metal' }
+          get :index, params: { q: 'genre:Metal' }
 
-          expect(@controller.instance_variable_get(:@products)).to include(product1)
+          result = subject
+
+          expect(result.count).to eq(1)
+          expect(result[0].genres).to include(genre)
         end
       end
     end

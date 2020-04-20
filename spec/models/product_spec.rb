@@ -16,6 +16,6 @@ RSpec.describe Product, type: :model do
   it 'is not valid when name already taken' do
     create(:product, title: 'Dup name')
 
-    expect { create(:product, title: 'Dup name') }.to raise_error('Validation failed: Name has already been taken')
+    expect { create(:product, title: 'Dup name') }.to raise_error('Validation failed: Title has already been taken')
   end
 end
