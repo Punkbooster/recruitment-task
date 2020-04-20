@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :genre, class: Genre do
-    name { 'Synthwave' }
-    description { 'Sample description' }
+    name { Faker::Music.genre }
 
     factory :genre_with_product do
       after(:create) do |genre|

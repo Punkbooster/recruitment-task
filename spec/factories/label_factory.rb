@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :label, class: Label do
-    name { 'Monnom Black' }
-    description { 'Sample description' }
+    name { Faker::Music.instrument }
   end
 end

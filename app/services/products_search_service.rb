@@ -12,7 +12,7 @@ class ProductsSearchService
   end
 
   def call
-    return @relation if scope_name.nil? || @relation.empty?
+    return [] if scope_name.nil? || @relation.empty?
 
     @relation.public_send(scope_name, @query_value)
   end

@@ -1,9 +1,8 @@
 FactoryBot.define do
   factory :product, class: Product do
-    title { 'Chaos Come To Conquer EP' }
-    description { 'Sample description' }
-    released_at { Time.now - 30.days }
-    price { 10 }
+    title { Faker::Music.album }
+    released_at { Faker::Date.in_date_period }
+    price { Faker::Commerce.price }
     label { Label.last || build(:label) }
 
     factory :product_with_genre do
