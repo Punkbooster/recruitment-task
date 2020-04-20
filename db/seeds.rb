@@ -4,35 +4,23 @@ ActiveRecord::Base.transaction do
   Genre.delete_all
   Label.delete_all
 
-  %i[Monnom Blood-music Roadrunner].each do |label_name|
-    Label.create!(name: label_name)
+  (1...5).each do
+    Label.create!(name: Faker::Music.unique.instrument)
   end
 
-  product_names = [
-    'Perturbator New Model Album',
-    'Carpenter Vice EP',
-    'Gost T-shirt',
-    'Attila About That Life Album'
-  ]
-
-  product_names.each_with_index do |name, index|
-    Product.create!(
-      title: name,
-      released_at: Time.now - 1.month,
-      label: Label.all.sample,
-      price: 10 + index
+  (1...5).each do
+    Genre.create!(
+      name: Faker::Music.unique.genre
     )
   end
 
-  genre_names = [
-    'Metal',
-    'Synthwave',
-    'Techno'
-  ]
-  genre_names.each do |name|
-    Genre.create!(
-      name: name,
-      products: [Product.all.sample]
+  (1...5).each do
+    Product.create!(
+      title: Faker::Music.unique.album,
+      released_at: Faker::Date.in_date_period,
+      label: Label.all.sample,
+      price: Faker::Commerce.price,
+      genres: [Genre.all.sample]
     )
   end
 end
