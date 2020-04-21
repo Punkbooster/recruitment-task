@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version - 2.6.3
 
-Things you may want to cover:
+* Rails version - 5.2.4.2
 
-* Ruby version
+* Database creation - rails db:setup
 
-* System dependencies
+* How to run the test suite - rspec
 
-* Configuration
+* Heroku url - https://rocky-refuge-02037.herokuapp.com/
 
-* Database creation
+* Sample search queries - genre:Soul label:Fdim7 product:Album Faith Album
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Checked with - simplecov, brakeman & reek
