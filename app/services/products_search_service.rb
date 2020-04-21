@@ -12,7 +12,7 @@ class ProductsSearchService
   end
 
   def call
-    return [] if invalid_query?
+    return Product.none if invalid_query?
 
     @relation.public_send(scope_name, @query_value)
   end
